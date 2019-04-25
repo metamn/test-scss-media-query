@@ -1,0 +1,18 @@
+// Home page
+//
+// desc
+//
+// Styleguide home
+html {
+  &.home {
+    body {
+      .thumbs {
+        @include thumbs;
+      }
+
+      .fulls {
+        @include fulls;
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+@mixin thumbs {
+  @include grid(2, $lem, $lem);
+
+  .article {
+    @include article;
+    @include article-thumb;
+  }
+}

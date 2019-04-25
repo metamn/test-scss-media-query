@@ -1,0 +1,19 @@
+html {
+  &.delivering-the-message {
+    .article {
+      .picture {
+        @include tablet {
+          padding: $lem !important;
+        }
+      }
+    }
+
+    .thumbs {
+      @include thumbs;
+    }
+
+    .fulls {
+      @include fulls;
+    }
+  }
+}
