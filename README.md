@@ -1,69 +1,130 @@
-# Testing SCSS Imports
+# Testing SCSS Media Queries
 
-## Defaults
+## The problem
 
-Global SCSS imports with globbing:
+In another project the media queries got messed up in the compiled CSS file. Like:
+
+```CSS
+@media (min-width: 768px) and (max-width: 1023px) and (max-width: 767px) {
+    html body .header {
+        margin-top: var(--spacer-32);
+    }
+}
+```
+
+A guess is that this is all due to nested media queries:
 
 ```SCSS
-@import 'framework/behavior/**/*.scss';
-@import 'framework/structure/**/*.scss';
-@import 'framework/design/typography/scale/scale.scss';
-@import 'framework/design/**/*.scss';
-@import 'project/**/*.scss';
-@import 'framework/templates/**/*.scss';
-@import 'pages/**/*.scss';
+@include media($tablet...) {
+  display: grid;
+
+  .header {
+    @include responsive-spacing(margin-top, large);
+    @include responsive-spacing(padding-top, large);
+    @include border(border-top);
+  }
+}
 ```
 
-## CSS file size
+## Test 1
 
-1. Barebones
+```SCSS
+@include mobile {
+  background: red;
+}
 
-- empty `project/`
-- `pages/home` has just a "Test" inside
-- CSS file size: 12K
+@include tablet {
+  background: blue;
 
-```
-cs@cs-swift:~/work/test-scss-imports$ ls -alh production/assets/styles/site.min.css
--rw-r--r-- 1 cs cs 12K Apr 24 16:33 production/assets/styles/site.min.css
-```
+  @include portrait {
+	background: green;
+  }
 
-2. Articles added and styled
+  @include landscape {
+	background: yellow;
+  }
+}
 
-- `project` has 13 mixins
-- `pages/home` has 3 thumbs and 3 full articles
-- CSS file size: 63K
+@include laptop {
+  background: grey;
+}
 
-```
-cs@cs-swift:~/work/test-scss-imports$ ls -alh production/assets/styles/site.min.css
--rw-r--r-- 1 cs cs 63K Apr 24 17:23 production/assets/styles/site.min.css
-```
-
-3. Article template
-
-- Added code/pages/delivering-the-message
-- And the corresponing template: code/framework/templates/article
-- CSS file size: 90K
-
-```
-cs@cs-swift:~/work/test-scss-imports$ ls -alh production/assets/styles/site.min.css
--rw-r--r-- 1 cs cs 90K Apr 24 18:40 production/assets/styles/site.min.css
+@include desktop {
+  background: lightblue;
+}
 ```
 
-4. Article template + homepage content
+No anomaly detected in the compiled CSS.
 
-- Homepage content and styling added to Article template
-- CSS file size: 148K
-
+```bash
+cs@cs-swift:~/work/test-scss-media-query$ grep -rn '@media' production/assets/styles/site.min.css
+330:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+341:      @media only screen and (orientation: portrait) {
+344:      @media only screen and (max-width: 767.9px) {
+361:    @media only screen and (orientation: landscape) {
+364:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+399:    @media only screen and (max-width: 767.9px) {
+618:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+629:      @media only screen and (orientation: portrait) {
+632:      @media only screen and (max-width: 767.9px) {
+649:    @media only screen and (orientation: landscape) {
+652:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+687:    @media only screen and (max-width: 767.9px) {
+824:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+835:      @media only screen and (orientation: portrait) {
+838:      @media only screen and (max-width: 767.9px) {
+855:    @media only screen and (orientation: landscape) {
+858:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+893:    @media only screen and (max-width: 767.9px) {
+947:  @media only screen and (orientation: portrait) {
+951:  @media only screen and (max-width: 767.9px) {
+1042:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+1053:      @media only screen and (orientation: portrait) {
+1056:      @media only screen and (max-width: 767.9px) {
+1073:    @media only screen and (orientation: landscape) {
+1076:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+1111:    @media only screen and (max-width: 767.9px) {
+1164:    @media only screen and (max-width: 767.9px) {
+1231:    @media only screen and (max-width: 767.9px) {
+1236:@media only screen and (max-width: 767.9px) {
+1240:@media only screen and (min-width: 768px) and (max-width: 1024px) {
+1243:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+1246:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+1250:@media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+1254:@media only screen and (min-width: 1600.1px) {
+1663:  @media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+1668:  @media only screen and (min-width: 1600.1px) {
+1814:          @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+1825:            @media only screen and (orientation: portrait) {
+1828:            @media only screen and (max-width: 767.9px) {
+1845:          @media only screen and (orientation: landscape) {
+1848:          @media only screen and (min-width: 768px) and (max-width: 1024px) {
+1883:          @media only screen and (max-width: 767.9px) {
+2019:          @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+2030:            @media only screen and (orientation: portrait) {
+2033:            @media only screen and (max-width: 767.9px) {
+2050:          @media only screen and (orientation: landscape) {
+2053:          @media only screen and (min-width: 768px) and (max-width: 1024px) {
+2088:          @media only screen and (max-width: 767.9px) {
+2141:        @media only screen and (orientation: portrait) {
+2145:        @media only screen and (max-width: 767.9px) {
+2236:          @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+2247:            @media only screen and (orientation: portrait) {
+2250:            @media only screen and (max-width: 767.9px) {
+2267:          @media only screen and (orientation: landscape) {
+2270:          @media only screen and (min-width: 768px) and (max-width: 1024px) {
+2305:          @media only screen and (max-width: 767.9px) {
+2358:          @media only screen and (max-width: 767.9px) {
+2425:          @media only screen and (max-width: 767.9px) {
+2429:      @media only screen and (max-width: 767.9px) {
+2432:      @media only screen and (min-width: 768px) and (max-width: 1024px) {
+2435:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+2438:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+2441:      @media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+2444:      @media only screen and (min-width: 1600.1px) {
+2452:      @media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+2457:      @media only screen and (min-width: 1600.1px) {
+cs@cs-swift:~/work/test-scss-media-query$
 ```
-cs@cs-swift:~/work/test-scss-imports$ ls -alh production/assets/styles/site.min.css
--rw-r--r-- 1 cs cs 148K Apr 24 18:46 production/assets/styles/site.min.css
-```
 
-5. Removing minification:
-
-- CSS file size: 199K
-
-```
-cs@cs-swift:~/work/test-scss-imports$ ls -alh production/assets/styles/site.min.css
--rw-r--r-- 1 cs cs 199K Apr 24 18:58 production/assets/styles/site.min.css
-```
+## Test 2
