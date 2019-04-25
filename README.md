@@ -128,3 +128,95 @@ cs@cs-swift:~/work/test-scss-media-query$
 ```
 
 ## Test 2
+
+```SCSS
+@include desktop {
+  @include section-padding;
+}
+
+.article {
+  @include article;
+  @include article-thumb;
+  @include section-padding;
+}
+```
+
+Results: One similar `strange` compilation found:
+
+```
+2467:  @media only screen and (min-width: 1600.1px) and (min-width: 1024.1px) and (max-width: 1600px) {
+```
+
+```bash
+cs@cs-swift:~/work/test-scss-media-query$ grep -rn '@media' production/assets/styles/site.min.css
+330:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+341:      @media only screen and (orientation: portrait) {
+344:      @media only screen and (max-width: 767.9px) {
+361:    @media only screen and (orientation: landscape) {
+364:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+399:    @media only screen and (max-width: 767.9px) {
+618:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+629:      @media only screen and (orientation: portrait) {
+632:      @media only screen and (max-width: 767.9px) {
+649:    @media only screen and (orientation: landscape) {
+652:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+687:    @media only screen and (max-width: 767.9px) {
+824:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+835:      @media only screen and (orientation: portrait) {
+838:      @media only screen and (max-width: 767.9px) {
+855:    @media only screen and (orientation: landscape) {
+858:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+893:    @media only screen and (max-width: 767.9px) {
+947:  @media only screen and (orientation: portrait) {
+951:  @media only screen and (max-width: 767.9px) {
+1042:    @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+1053:      @media only screen and (orientation: portrait) {
+1056:      @media only screen and (max-width: 767.9px) {
+1073:    @media only screen and (orientation: landscape) {
+1076:    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+1111:    @media only screen and (max-width: 767.9px) {
+1164:    @media only screen and (max-width: 767.9px) {
+1231:    @media only screen and (max-width: 767.9px) {
+1236:@media only screen and (max-width: 767.9px) {
+1240:@media only screen and (min-width: 768px) and (max-width: 1024px) {
+1243:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+1246:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+1250:@media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+1254:@media only screen and (min-width: 1600.1px) {
+1663:  @media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+1668:  @media only screen and (min-width: 1600.1px) {
+1814:          @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+1825:            @media only screen and (orientation: portrait) {
+1828:            @media only screen and (max-width: 767.9px) {
+1845:          @media only screen and (orientation: landscape) {
+1848:          @media only screen and (min-width: 768px) and (max-width: 1024px) {
+1883:          @media only screen and (max-width: 767.9px) {
+2019:          @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+2030:            @media only screen and (orientation: portrait) {
+2033:            @media only screen and (max-width: 767.9px) {
+2050:          @media only screen and (orientation: landscape) {
+2053:          @media only screen and (min-width: 768px) and (max-width: 1024px) {
+2088:          @media only screen and (max-width: 767.9px) {
+2141:        @media only screen and (orientation: portrait) {
+2145:        @media only screen and (max-width: 767.9px) {
+2236:          @media only screen and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+2247:            @media only screen and (orientation: portrait) {
+2250:            @media only screen and (max-width: 767.9px) {
+2267:          @media only screen and (orientation: landscape) {
+2270:          @media only screen and (min-width: 768px) and (max-width: 1024px) {
+2305:          @media only screen and (max-width: 767.9px) {
+2358:          @media only screen and (max-width: 767.9px) {
+2425:          @media only screen and (max-width: 767.9px) {
+2429:      @media only screen and (max-width: 767.9px) {
+2432:      @media only screen and (min-width: 768px) and (max-width: 1024px) {
+2435:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+2438:  @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+2441:      @media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+2444:      @media only screen and (min-width: 1600.1px) {
+2452:      @media only screen and (min-width: 1024.1px) and (max-width: 1600px) {
+2457:      @media only screen and (min-width: 1600.1px) {
+2462:    @media only screen and (min-width: 1600.1px) {
+2467:  @media only screen and (min-width: 1600.1px) and (min-width: 1024.1px) and (max-width: 1600px) {
+2472:  @media only screen and (min-width: 1600.1px) and (min-width: 1600.1px) {
+cs@cs-swift:~/work/test-scss-media-query$
+```

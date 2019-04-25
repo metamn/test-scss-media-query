@@ -1,6 +1,10 @@
 @mixin thumbs {
   @include grid(2, $lem, $lem);
 
+  @include desktop {
+    @include section-padding;
+  }
+
   .article {
     @include article;
     @include article-thumb;
