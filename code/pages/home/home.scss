@@ -6,12 +6,10 @@
 html {
   &.home {
     body {
+      @include section-padding;
+
       .thumbs {
         @include thumbs;
-      }
-
-      .fulls {
-        @include fulls;
       }
     }
   }

@@ -22,4 +22,28 @@
   .article__footnotes {
     @include article-footnotes;
   }
+
+  @include mobile {
+    background: red;
+  }
+
+  @include tablet {
+    background: blue;
+
+    @include portrait {
+      background: green;
+    }
+
+    @include landscape {
+      background: yellow;
+    }
+  }
+
+  @include laptop {
+    background: grey;
+  }
+
+  @include desktop {
+    background: lightblue;
+  }
 }

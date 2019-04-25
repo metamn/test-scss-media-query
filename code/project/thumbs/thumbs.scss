@@ -4,5 +4,6 @@
   .article {
     @include article;
     @include article-thumb;
+    @include section-padding;
   }
 }
