@@ -26,7 +26,54 @@ A guess is that this is all due to nested media queries:
 }
 ```
 
-## Test 1
+Where `responsive-spacing` has also media queries inside:
+
+```SCSS
+@mixin responsive-spacing($selector: margin-bottom, $variant: large, $map-type: '') {
+	$line-height: '';
+	$line-height-mobile: '';
+
+	@if ($map-type == content) {
+		$line-height: '-20';
+		$line-height-mobile: '-18';
+	}
+
+	$map: (
+		large: var(--spacer-32#{$line-height}),
+		small: var(--spacer-24#{$line-height}),
+		horizontal: var(--gutter-24),
+		none: 0
+	);
+
+	$map-mobile: (
+		large: var(--spacer-32#{$line-height-mobile}),
+		small: var(--spacer-16#{$line-height-mobile}),
+		horizontal: var(--gutter-16),
+		none: 0
+	);
+
+	@include media('<tablet') {
+		#{$selector}: map-get($map-mobile, $variant);
+	}
+
+	@include media('>=tablet') {
+		#{$selector}: map-get($map, $variant);
+	}
+}
+```
+
+Also others faced this problem: https://medium.com/front-end-developers/the-solution-to-media-queries-in-sass-5493ebe16844
+
+## Solution
+
+Forget SASS. Really. It's React time. When all these and [more problems](https://github.com/metamn/test-scss-imports) are solved inside the box.
+
+SASS and BEM were good mates enduring a good couple of years which in tech terms is an age.
+Time to move to Javascript: http://metamn.io/beat/on-old-and-new-stacks/
+
+## Tests
+
+### Test 1
 
 ```SCSS
 @include mobile {
@@ -127,7 +174,7 @@ cs@cs-swift:~/work/test-scss-media-query$ grep -rn '@media' production/assets/st
 cs@cs-swift:~/work/test-scss-media-query$
 ```
 
-## Test 2
+### Test 2
 
 ```SCSS
 @include desktop {
