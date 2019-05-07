@@ -66,9 +66,9 @@ Also others faced this problem: https://medium.com/front-end-developers/the-solu
 
 ## Solution
 
-Forget SASS. [Too many problems](https://github.com/metamn/test-scss-imports). Really. It's React time. Where all these and problems are solved automatically, inside the box.
+Forget SASS. [Too many problems](https://github.com/metamn/test-scss-imports). Really. It's React time. Where all these problems are solved automatically, inside the box.
 
-SASS and BEM were good mates enduring a good couple of years which in tech terms is an age.
+SASS and BEM were good mates enduring a good couple of years (5+ in my case) which in tech terms is an age.
 Time to move on to Javascript: http://metamn.io/beat/on-old-and-new-stacks/
 
 ## Tests
